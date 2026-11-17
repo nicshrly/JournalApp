@@ -60,7 +60,14 @@ function App() {
             setEntry(saved);
             setCreate(false);
           }}></NewEntry>) : 
-        (<Entry data={entry}></Entry>)}
+        (<Entry 
+          data={entry} 
+          onDelete={() => {
+            loadEntries();
+            setEntry(undefined);
+            setCreate(true);
+          }}></Entry>)
+        }
       </div>
     </div>
   )

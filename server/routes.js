@@ -1,5 +1,6 @@
 import express from 'express';
 import { getDB } from './db.js';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.post("/", async (req, res) => {
       title: title.trim(),
       date: date,
       mood: mood,
-      body: body.trim()
+      body: body
     };
 
     const result = await db.collection('entries').insertOne(newEntry);
@@ -36,7 +37,30 @@ router.post("/", async (req, res) => {
   }
   catch(error){
     console.error(error);
-    res.status(500).json({ error: 'Could not create new journal entry'})
+    res.status(500).json({ error: 'Could not create new journal entry'});
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try{
+    const db = getDB();
+    const { id } = req.params;
+
+    if(!ObjectId.isValid(id)){
+      return res.status(400).json({ error: 'Invalid Id' });
+    }
+
+    const result = await db.collection('entries').deleteOne({ _id: new ObjectId(id) });
+
+    if(result.deletedCount === 0){
+      return res.status(404).json({ error: 'Entry not found' });
+    }
+
+    res.status(204).send();
+  }
+  catch(err){
+    console.error(err);
+    res.status(500).json({ error: 'Could not delete journal entry'});
   }
 });
 

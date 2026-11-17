@@ -23,6 +23,8 @@
 
 .container div.sidebar {
   grid-area: sidebar;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .container div.content {
