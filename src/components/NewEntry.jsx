@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './NewEntry.css';
 
-const NewEntry = () => {
+const NewEntry = ({ onEntryAdded }) => {
   const date = new Date().toDateString();
 
   const [title, setTitle] = useState('');
@@ -27,9 +27,12 @@ const NewEntry = () => {
       const saved = await res.json();
       console.log('Saved:', saved);
 
+      // reset form
       setTitle('');
       setBody('');
       setMood('No Mood');
+
+      onEntryAdded(saved);
     }
     catch(error){
       console.error(error);

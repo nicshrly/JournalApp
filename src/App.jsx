@@ -38,7 +38,7 @@ function App() {
           New
         </button>
         <li>
-          {entries.map(e => (
+          {[...entries].reverse().map(e => (
             <button 
               key={e._id} 
               onClick={() => {
@@ -52,7 +52,14 @@ function App() {
         </li>
       </div>
       <div className='content'>
-        {create ? (<NewEntry></NewEntry>) : (<Entry data={entry}></Entry>)}
+        {create ? 
+        (<NewEntry 
+          onEntryAdded={(saved) => {
+            loadEntries();
+            setEntry(saved);
+            setCreate(false);
+          }}></NewEntry>) : 
+        (<Entry data={entry}></Entry>)}
       </div>
     </div>
   )
