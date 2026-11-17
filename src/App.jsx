@@ -37,19 +37,20 @@ function App() {
         <button className='create' onClick={() => setCreate(true)}>
           New
         </button>
-        <li>
+        <ul className='entry-list'>
           {[...entries].reverse().map(e => (
-            <button 
-              key={e._id} 
-              onClick={() => {
-                setCreate(false);
-                setEntry(e);
-              }}
-            >
-              {e.title}
-            </button>
+            <li key={e._id}>
+              <button
+                onClick={() => {
+                  setCreate(false);
+                  setEntry(e);
+                }}
+              >
+                {e.title}
+              </button>
+            </li>
           ))}
-        </li>
+        </ul>
       </div>
       <div className='content'>
         {create ? 

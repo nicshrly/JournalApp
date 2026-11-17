@@ -8,16 +8,25 @@ const NewEntry = ({ onEntryAdded }) => {
   const [body, setBody] = useState('');
   const [mood, setMood] = useState('');
 
-  const moods = ['No Mood', 'Happy', 'Calm', 'Tired', 'Anxious', 'Sad', 'Mad']
+  const moods = ['No Mood', 'Happy', 'Calm', 'Tired', 'Anxious', 'Sad', 'Mad'];
+
+  const isBodyEmpty = body.trim() === '';
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+
+    if(isBodyEmpty) return;
 
     try{
       const res = await fetch('http://localhost:5000/entries', {
         method:'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, body, mood, date})
+        body: JSON.stringify({ 
+          title: title || 'Untitled', 
+          body, 
+          mood, 
+          date
+        })
       });
 
       if(!res.ok){
@@ -68,7 +77,7 @@ const NewEntry = ({ onEntryAdded }) => {
         placeholder="What's on your mind?"
       />
 
-      <button className='submit'>Save</button>
+      <button className='submit' disabled={isBodyEmpty}>Save</button>
     </form>
   )
 };
