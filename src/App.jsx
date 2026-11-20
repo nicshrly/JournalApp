@@ -54,19 +54,27 @@ function App() {
       </div>
       <div className='content'>
         {create ? 
-        (<NewEntry 
-          onEntryAdded={(saved) => {
-            loadEntries();
-            setEntry(saved);
-            setCreate(false);
-          }}></NewEntry>) : 
-        (<Entry 
-          data={entry} 
-          onDelete={() => {
-            loadEntries();
-            setEntry(undefined);
-            setCreate(true);
-          }}></Entry>)
+          (<NewEntry 
+            onEntryAdded={(saved) => {
+              loadEntries();
+              setEntry(saved);
+              setCreate(false);
+            }}
+          ></NewEntry>) 
+        : 
+          (<Entry
+            key={entry._id} 
+            data={entry} 
+            onDelete={() => {
+              loadEntries();
+              setEntry(undefined);
+              setCreate(true);
+            }}
+            onUpdate={(saved) => {
+              loadEntries();
+              setEntry({ ...entry, ...saved });
+            }}
+          ></Entry>)
         }
       </div>
     </div>

@@ -1,0 +1,1 @@
+export const moods = ['Happy', 'Calm', 'Tired', 'Anxious', 'Sad', 'Mad'];

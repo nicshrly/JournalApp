@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './NewEntry.css';
+import { moods } from './moods';
 
 const NewEntry = ({ onEntryAdded }) => {
   const date = new Date().toDateString();
@@ -7,8 +8,6 @@ const NewEntry = ({ onEntryAdded }) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [mood, setMood] = useState('');
-
-  const moods = ['No Mood', 'Happy', 'Calm', 'Tired', 'Anxious', 'Sad', 'Mad'];
 
   const isBodyEmpty = body.trim() === '';
 
@@ -39,7 +38,7 @@ const NewEntry = ({ onEntryAdded }) => {
       // reset form
       setTitle('');
       setBody('');
-      setMood('No Mood');
+      setMood('');
 
       onEntryAdded(saved);
     }
@@ -65,6 +64,7 @@ const NewEntry = ({ onEntryAdded }) => {
         value={mood}
         onChange={(e) => setMood(e.target.value)}
       >
+        <option value=''>No Mood</option>
         {moods.map((m) => (
           <option key={m} value={m}>{m}</option>
         ))}
